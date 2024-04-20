@@ -83,7 +83,6 @@ async function processDocuments(body: { question: string, documents: string[] },
             }
 
             const data = await resOpenAI.json();
-            console.log(data);
 
             if (signal.aborted) {
                 console.log("Processing was aborted after receiving response.");
@@ -91,6 +90,9 @@ async function processDocuments(body: { question: string, documents: string[] },
             }
 
             if (data.choices && data.choices.length > 0) {
+                if (data.choices[0].message.content === "Error in the input format.") {
+                    throw new Error("Error in the input format.");
+                }
                 console.log("OpenAI response for document", i, ":", data.choices[0].message.content);
                 global.storedData.facts = data.choices[0].message.content.split("\n");
             }
@@ -128,7 +130,8 @@ The team has decided to use a responsive design to ensure the product works well
 The team has decided to provide both dark and light theme options for the user interface.
 
 Given the question, please summarize a list of facts from a list of call logs.
-Note: List each fact in a new line, and do not write anything else.
+Note: List each fact in a new line, and do not output anything else.
+If the following input does not match the above samples I give you, output: Error in the input format.
 
 Question: <%= question %>
 Call logs:
@@ -162,7 +165,8 @@ The team has decided to provide both dark and light theme options for the user i
 
 Given the question and the previous facts, please summarize a list of new facts from a list of new call logs.
 Hint: Retain previous facts that do not get affected by the new logs, modify previous facts that get affected by the new logs, add new facts that are newly mentioned in the new logs, and remove previous facts if the new logs indicate that they are dropped.
-Note: List each fact in a new line, and do not write anything else.
+Note: List each fact in a new line, and do not output anything else.
+If the following input does not match the above samples I give you, output: Error in the input format.
 
 Questions: <%= question %>
 Previous facts:

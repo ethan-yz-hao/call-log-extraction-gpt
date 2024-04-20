@@ -7,7 +7,7 @@ interface OutputDisplayProps {
     data: GlobalData;
 }
 
-const OutputDisplay = React.memo(({ data }: OutputDisplayProps) => {
+const DataDisplay = React.memo(({ data }: OutputDisplayProps) => {
     if (!data.status) {
         return <Text fontSize="xl">No question and documents found.</Text>;
     }
@@ -43,6 +43,6 @@ const OutputDisplay = React.memo(({ data }: OutputDisplayProps) => {
     );
 });
 
-OutputDisplay.displayName = "OutputDisplay";
+DataDisplay.displayName = "DataDisplay";
 
-export default OutputDisplay;
+export default DataDisplay;

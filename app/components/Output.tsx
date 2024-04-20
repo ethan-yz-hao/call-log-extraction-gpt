@@ -1,7 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Text } from '@chakra-ui/react';
-import OutputDisplay from "@/app/components/OutputDisplay";
+import DataDisplay from "@/app/components/DataDisplay";
+import ErrorDisplay from "@/app/components/ErrorDisplay";
 
 const Output = () => {
     const [data, setData] = useState(null);
@@ -12,7 +13,6 @@ const Output = () => {
         let isMounted = true;
         const fetchData = async () => {
             if (!loading) setLoading(true);
-            setError('');
             try {
                 const response = await fetch('/get_question_and_facts');
                 if (!response.ok) {
@@ -27,6 +27,7 @@ const Output = () => {
                 if (isMounted) {
                     setData(result);
                     setLoading(false);
+                    setError('');
                 }
             } catch (err: unknown) {
                 if (isMounted) {
@@ -54,11 +55,11 @@ const Output = () => {
                 Output:
             </Text>
             {loading ? (
-                <div>Loading...</div>
+                <Text fontSize="lg">Loading...</Text>
             ) : error ? (
-                <div>Error: {error}</div>
+                <ErrorDisplay error={error} />
             ) : (
-                data && <OutputDisplay data={data} />
+                data && <DataDisplay data={data} />
             )}
         </div>
     );
