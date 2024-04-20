@@ -27,7 +27,7 @@ const OutputDisplay = React.memo(({ data }: OutputDisplayProps) => {
                         <ListItem key={index}>
                             <HStack>
                             <ListIcon as={CheckCircleIcon} color="green.500" />
-                            <Code>{fact}</Code>
+                            <Code width="full">{fact}</Code>
                             </HStack>
                         </ListItem>
                     ))}
