@@ -24,6 +24,7 @@ export function POST(request: NextRequest) {
 
 async function processDocuments(body: { question: string, documents: string[] }, signal: AbortSignal) {
     const apiKey = process.env.OPENAI_API_KEY;
+    console.log("OpenAI API key:", process.env.OPENAI_API_KEY);
     if (!apiKey) {
         console.error("OpenAI API key not found");
         return;
