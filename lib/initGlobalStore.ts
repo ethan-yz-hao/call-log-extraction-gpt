@@ -5,3 +5,6 @@ if (!global.storedData) {
         status: ""
     };
 }
+if (!global.error) {
+    global.error = "";
+}
