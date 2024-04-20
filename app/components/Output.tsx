@@ -13,7 +13,7 @@ const Output = () => {
         const fetchData = async () => {
             if (!loading) setLoading(true);
             try {
-                const response = await fetch('/get_question_and_documents');
+                const response = await fetch('/get_question_and_facts');
                 if (!response.ok) {
                     throw new Error(`HTTP error, status = ${response.status}`);
                 }
