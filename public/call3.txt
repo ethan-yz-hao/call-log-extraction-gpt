@@ -1,0 +1,11 @@
+1
+00:01:11,430 --> 00:01:40,520
+John: I've been thinking about our decision on the responsive design. While it's important to ensure our product works well on all devices, I think we should focus on desktop first. Our primary users will be using our product on desktops.
+
+2
+00:01:41,450 --> 00:01:49,190
+Sara: I see your point, John. Focusing on desktop first will allow us to better cater to our primary users. I agree with this change.
+
+3
+00:01:49,340 --> 00:01:50,040
+Mike: I agree as well. I also think the idea of using a modular design doesn't make sense. Let's not make that decision yet.
