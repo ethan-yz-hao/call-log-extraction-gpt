@@ -8,6 +8,9 @@ interface OutputDisplayProps {
 }
 
 const OutputDisplay = React.memo(({ data }: OutputDisplayProps) => {
+    if (!data.status) {
+        return <Text fontSize="xl">No question and documents found.</Text>;
+    }
     if (data.status === "processing") {
         return (
             <Box textAlign="center" my={5}>

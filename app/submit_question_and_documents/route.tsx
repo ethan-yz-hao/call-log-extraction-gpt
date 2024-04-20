@@ -74,7 +74,7 @@ async function processDocuments(body: { question: string, documents: string[] },
                     "Authorization": `Bearer ${apiKey}`
                 },
                 body: JSON.stringify(payload),
-                signal
+                signal,
             });
             if (!resOpenAI.ok) {
                 const errorResponse = await resOpenAI.json();
@@ -91,11 +91,11 @@ async function processDocuments(body: { question: string, documents: string[] },
 
             if (data.choices && data.choices.length > 0) {
                 console.log("OpenAI response for document", i, ":", data.choices[0].message.content);
-                const facts = data.choices[0].message.content.split("\n");
-                global.storedData.facts = facts;
+                global.storedData.facts = data.choices[0].message.content.split("\n");
             }
         }
         global.storedData.status = "done";
+        console.log("Finished processing documents:", global.storedData);
     } catch (error: unknown) {
         if (error instanceof Error) {
             console.error("Error processing documents:", error.message);
