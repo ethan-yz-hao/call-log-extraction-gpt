@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
+import {useForm, useFieldArray} from 'react-hook-form';
 import {
     Box,
     Button,
@@ -15,22 +15,22 @@ import {
     ListItem,
     Text
 } from '@chakra-ui/react';
-import { DeleteIcon, DragHandleIcon } from '@chakra-ui/icons';
-import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd';
+import {AddIcon, DeleteIcon, DragHandleIcon} from '@chakra-ui/icons';
+import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 
 interface FormData {
     question: string;
-    documents:  string [];
+    documents: string [];
 }
 
 const Input = () => {
-    const { register, control, handleSubmit, formState: { errors }, reset, trigger } = useForm<FormData>({
+    const {register, control, handleSubmit, formState: {errors}, reset, trigger} = useForm<FormData>({
         defaultValues: {
             documents: [''],
         },
         mode: "onChange"
     });
-    const { fields, append, remove, move } = useFieldArray({
+    const {fields, append, remove, move} = useFieldArray({
         control,
         // @ts-ignore
         name: "documents"
@@ -69,7 +69,9 @@ const Input = () => {
     return (
         <Box as="form" onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={!!errors.question}>
-                <FormLabel htmlFor="question">Your Question</FormLabel>
+                <FormLabel htmlFor="question" fontSize="xl" fontWeight="semibold" my={2}>
+                    Question:
+                </FormLabel>
                 <ChakraInput
                     id="question"
                     placeholder="Type your question here..."
@@ -85,7 +87,15 @@ const Input = () => {
                     {errors.question && errors.question.message}
                 </FormErrorMessage>
 
-                <FormLabel htmlFor="urls">Urls to Logs:</FormLabel>
+                <HStack spacing={2} alignItems="end" justifyContent="space-between" my={2}>
+                    <FormLabel htmlFor="urls" fontSize="xl" fontWeight="semibold">
+                        Log URLs:
+                    </FormLabel>
+                    <Button mt={4} onClick={() => append('')} colorScheme="teal" leftIcon={<AddIcon />}>
+                        Add URL
+                    </Button>
+                </HStack>
+
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="documents">
                         {(provided) => (
@@ -97,7 +107,7 @@ const Input = () => {
                                                 ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
                                                 mb={2}>
                                                 <HStack spacing={2}>
-                                                    <Icon as={DragHandleIcon} w={6} h={6}/>
+                                                    <Icon as={DragHandleIcon} w={4} h={4}/>
                                                     <ChakraInput
                                                         placeholder="Enter URL here..."
                                                         {...register(`documents.${index}`, {
@@ -109,8 +119,8 @@ const Input = () => {
                                                         })}
                                                         onBlur={validateUrls}
                                                     />
-                                                    <IconButton aria-label="Delete URL" icon={<DeleteIcon />}
-                                                                onClick={() => remove(index)} />
+                                                    <IconButton aria-label="Delete URL" icon={<DeleteIcon/>}
+                                                                onClick={() => remove(index)}/>
                                                 </HStack>
                                                 {errors.documents && errors.documents[index] && (
                                                     <Text color="red.500" fontSize="sm" mt={2}>
@@ -127,14 +137,11 @@ const Input = () => {
                     </Droppable>
                 </DragDropContext>
             </FormControl>
-
-            <Button mt={4} onClick={() => append('')} colorScheme="teal">
-                Add URL
+            <HStack justifyContent="center">
+            <Button width="40%" mt={4} colorScheme="blue" type="submit" isDisabled={Object.keys(errors).length > 0}>
+                Submit
             </Button>
-
-            <Button mt={4} colorScheme="blue" type="submit" isDisabled={Object.keys(errors).length > 0}>
-                Submit Question and Documents
-            </Button>
+            </HStack>
         </Box>
     );
 };

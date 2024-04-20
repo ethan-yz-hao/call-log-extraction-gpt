@@ -11,7 +11,7 @@ export function POST(request: NextRequest) {
 
     currentAbortController = new AbortController();
 
-    const response = NextResponse.json({message: "Request received, processing will start."}, {status: 202});
+    const response = NextResponse.json({message: "Request received, processing will start."}, {status: 200});
 
     request.json().then(body => {
         processDocuments(body, currentAbortController!.signal)
@@ -28,7 +28,7 @@ async function processDocuments(body: { question: string, documents: string[] },
         console.error("OpenAI API key not found");
         return;
     }
-    global.storedData = {question: body.question, facts: [], status: "pending"};
+    global.storedData = {question: body.question, facts: [], status: "processing"};
 
     const {question, documents} = body;
     console.log("Starting document processing for:", documents);
@@ -95,7 +95,7 @@ async function processDocuments(body: { question: string, documents: string[] },
                 global.storedData.facts = facts;
             }
         }
-        global.storedData.status = "completed";
+        global.storedData.status = "done";
     } catch (error: unknown) {
         if (error instanceof Error) {
             console.error("Error processing documents:", error.message);

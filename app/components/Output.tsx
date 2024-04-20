@@ -1,11 +1,60 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
+import { Text } from '@chakra-ui/react';
+import OutputDisplay from "@/app/components/OutputDisplay";
 
 const Output = () => {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true); // Initially true for first fetch
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchData = async () => {
+            if (!loading) setLoading(true);
+            try {
+                const response = await fetch('/get_question_and_documents');
+                if (!response.ok) {
+                    throw new Error(`HTTP error, status = ${response.status}`);
+                }
+                const result = await response.json();
+                if (isMounted) {
+                    setData(result);
+                    setLoading(false);
+                }
+            } catch (err: unknown) {
+                if (isMounted) {
+                    if (err instanceof Error) {
+                        setError(err.message);
+                    } else {
+                        setError('An unexpected error occurred');
+                    }
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+        const interval = setInterval(fetchData, 5000); // Fetch every 5 seconds
+        return () => {
+            clearInterval(interval);
+            isMounted = false;
+        };
+    }, []);
+
     return (
         <div>
-            Output
+            <Text fontSize="xl" fontWeight="semibold" mb={2}>
+                Output:
+            </Text>
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>Error: {error}</div>
+            ) : (
+                data && <OutputDisplay data={data} />
+            )}
         </div>
     );
 };
-
 export default Output;

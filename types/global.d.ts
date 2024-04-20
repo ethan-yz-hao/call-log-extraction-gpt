@@ -1,4 +1,4 @@
-interface GlobalData {
+export interface GlobalData {
     question: string;
     facts: string[];
     status: string;
