@@ -19,6 +19,13 @@ Given a question, the application summarizes the fact of the call log data using
  - Implemented polling mechanism to retrieve the result from the backend.
  - Deployed on Vercel for serverless operations.
 
+## Testing
+Vitest and Jest were used for testing core components like Input.tsx and Output.tsx:
+
+```bash
+npm run test
+```
+
 ## Installation
 Install dependencies with:
 ```bash
