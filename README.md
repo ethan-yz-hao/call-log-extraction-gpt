@@ -4,8 +4,6 @@
 
 Given a question, the application summarizes the fact of the call log data using GPT-4 API. It enhances developers' productivity by offering developers summaries of call log data, which can be used for debugging, testing, and troubleshooting purposes.
 
-Deploy on vercel [Call Log Extraction GPT](https://call-log-extraction-gpt.vercel.app/)
-
 ## Features
 - **Interactive User Interface**: Enables modifying the call log data URL via a drag-and-drop interface, along with options for adding and deleting entries.
 - **Error Handling**: Provides feedback for errors related to invalid URLs, empty inputs, or unsupported log formats.
